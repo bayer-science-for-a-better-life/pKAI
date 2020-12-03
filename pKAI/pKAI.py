@@ -1,6 +1,6 @@
 import argparse
 from os.path import dirname, isfile, abspath
-from .protein import Protein
+from protein import Protein
 import torch
 
 
@@ -12,7 +12,9 @@ def download_model(file_name: str, file_path: str) -> None:
 
     url = f"https://filedn.com/lcmXXv3bIOvYUloTyvVflnk/{file_name}"
     try:
-        print("Downloading file...")
+        print(
+            "Downloading the model (~654M)... This may take a couple of minutes and rest assured it is a one time action."
+        )
         request.urlretrieve(url, file_path)
     except error.HTTPError:
         raise error.HTTPError(

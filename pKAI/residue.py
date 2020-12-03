@@ -1,4 +1,4 @@
-from .atom import Atom
+from atom import Atom
 import torch
 
 AA_ATOMS = {

@@ -1,4 +1,4 @@
-from .residue import Residue
+from residue import Residue
 
 PK_MODS = {
     "ASP": 3.79,

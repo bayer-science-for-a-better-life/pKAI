@@ -12,20 +12,17 @@ note = {in preparation}
 
 ### Installation & Basic Usage
 
-We recommend installing pKAI on a conda enviroment.
+We recommend installing pKAI on a conda enviroment. The pKAI+ model will be downloaded on the first execution and saved for subsequent runs.
 
 ```
-conda env create -f environment.yml
-conda activate pKAI
-
-python3 -m pip install git+https://github.com/bayer-science-for-a-better-life/pKAI.git
+python3 -m pip install pKAI
 
 pKAI <pdbfile>
 ```
 
 It can also be used as python function,
 ```
-from pKAI import pKAI
+from pKAI.pKAI import pKAI
 
 pks = pKAI(pdb)
 ```
