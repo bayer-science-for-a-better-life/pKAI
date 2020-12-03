@@ -1,0 +1,10 @@
+name: pKAI
+channels:
+  - defaults
+dependencies:
+  - python=3.7
+  - pytorch
+  - cudatoolkit=10.1
+  - torchaudio
+  - torchvision
+  - pytorch-lightning

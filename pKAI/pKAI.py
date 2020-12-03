@@ -1,46 +1,69 @@
 import argparse
-from os.path import dirname
+from os.path import dirname, isfile, abspath
 from protein import Protein
-
-from run import LitDist
 import torch
+
+
+def download_model(file_name: str, file_path: str) -> None:
+    from urllib import request, error
+    import ssl
+
+    ssl._create_default_https_context = ssl._create_unverified_context
+
+    url = f"https://filedn.com/lcmXXv3bIOvYUloTyvVflnk/{file_name}"
+    try:
+        print("Downloading file...")
+        request.urlretrieve(url, file_path)
+    except error.HTTPError:
+        raise error.HTTPError(
+            f"No {file_name} found. Please check the model name you are using is supported (pKAI or pKAI+)."
+        )
+    except error.URLError:
+        raise error.URLError(
+            f"{url} not reachable. Please check that you have internet access."
+        )
+
+
+def load_model(model_name: str):
+    path = dirname(abspath(__file__))
+    fname = f"{model_name}_model.pt"
+    fpath = f"{path}/{fname}"
+
+    if not isfile(fpath):
+        download_model(fname, fpath)
+
+    device = torch.device(args.device)
+    model = torch.jit.load(f"{fpath}").to(device)
+
+    return model
+
+
+def pKAI(pdb, model_name="pKAI", device="cpu", threads=None):
+    if threads:
+        torch.set_num_threads(threads)
+    model = load_model(model_name)
+    prot = Protein(pdb)
+    prot.apply_cutoff()
+    pks = prot.predict_pkas(model, device)
+    return pks
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="pKAI")
     parser.add_argument("pdb_file", type=str, help="PDB file")
+    parser.add_argument(
+        "--model",
+        type=str,
+        choices=["pKAI", "pKAI+"],
+        help="Number of threads to use",
+        default="pKAI",
+    )
+    parser.add_argument(
+        "--device", type=str, help="Device on which to run the model on", default="cpu"
+    )
+    parser.add_argument("--threads", type=str, help="Number of threads to use")
 
     args = parser.parse_args()
 
-    # torch.set_num_threads(4)
-
-    path = dirname(__file__)
-
-    device = torch.device("cpu")  # "cuda:3")
-
-    # Pytorch Lightning Checkpoint
-    # model = (
-    #    LitDist().load_from_checkpoint(checkpoint_path=f"{path}/model.ckpt").to(device)
-    # )
-    # model.eval()
-
-    # Pytorch State Dict
-    # torch.save(model.state_dict(), f"{path}/model_state.pt")
-    # model = LitDist().to(device)
-    # model.load_state_dict(torch.load(f"{path}/model_state.pt"))
-    # model.eval()
-
-    # TorchScript
-    # model = LitDist().to(device).half()
-    # model.load_state_dict(torch.load(f"{path}/model_state_half.pt"))
-    # model = model.half()
-    # script = model.to_torchscript()
-    # torch.jit.save(script, f"{path}/model_script_half.pt")
-
-    model = torch.jit.load(f"{path}/model_script.pt")  # .to(device)
-
-    prot = Protein(args.pdb_file)
-
-    prot.apply_cutoff()
-
-    prot.predict_pkas(model)
+    pKAI(args.pdb_file, model_name=args.model, device=args.device, threads=args.threads)
 

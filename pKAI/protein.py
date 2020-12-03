@@ -104,17 +104,21 @@ class Protein:
             residue.calc_cutoff_atoms(cutoff_dist)
             residue.encode_input()
 
-    def predict_pkas(self, model):
-        # device = model.device
+    def predict_pkas(self, model, device):
+        pks = []
         for residue in self.iter_residues(titrable_only=True):
             x = residue.input_layer
             resname = residue.resname
 
-            dpk = float(model(x))
+            dpk = float(model(x.to(device)))
             pk = round(dpk + PK_MODS[resname], 2)
 
             to_print = (
                 f"{residue.chain:4} {residue.resnumb:6} {residue.resname:4} {pk:5.2f}"
             )
             print(to_print)
+
+            result = (residue.chain, residue.resnumb, residue.resname, pk)
+            pks.append(result)
+        return pks
 

@@ -1,0 +1,7 @@
+pKAI/__pycache__
+pKAI/models
+pKAI/*.pt
+.eggs
+buid/
+dist/
+pKAI.egg-info/
