@@ -5,3 +5,4 @@ pKAI/*.pt
 build/
 dist/
 pKAI.egg-info/
+run.py

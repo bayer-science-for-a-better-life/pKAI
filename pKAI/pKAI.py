@@ -1,6 +1,6 @@
 import argparse
 from os.path import dirname, isfile, abspath
-from protein import Protein
+from .protein import Protein
 import torch
 
 
