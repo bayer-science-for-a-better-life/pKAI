@@ -43,14 +43,15 @@ pKAI <pdbfile> --model pKAI
 
 ## Benchmark
 
-Performed on 927 experimental values taken from the PKAD database.
+Performed on 877 experimental values taken from the PKAD database.
 
 | Method                | RMSE | MAE  |
 |-----------------------|------|------|
-| Thurlkill<sup>1</sup> | 1.02 | 0.70 |
-| PROPKA<sup>2</sup>    | 1.04 | 0.69 |
+| Thurlkill<sup>1</sup> | 1.04 | 0.71 |
+| PROPKA<sup>2</sup>    | 1.05 | 0.71 |
 | PypKa<sup>3</sup>     | 0.98 | 0.66 |
-| pKAI+                 | 0.91 | 0.59 |
+| pKAI                  | 1.03 | 0.68 |
+| pKAI+                 | 0.93 | 0.60 |
 
 [1] Thurlkill, Richard L et al. “pK values of the ionizable groups of proteins.” doi:<a href="https://doi.org/10.1110/ps.051840806">10.1110/ps.051840806</a>
 
