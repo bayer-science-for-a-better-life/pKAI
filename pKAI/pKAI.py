@@ -11,6 +11,7 @@ def download_model(file_name: str, file_path: str) -> None:
     ssl._create_default_https_context = ssl._create_unverified_context
 
     url = f"https://filedn.com/lcmXXv3bIOvYUloTyvVflnk/{file_name}"
+    url = url.replace("+", "%2B")
     try:
         print(
             "Downloading the model (~654M)... This may take a couple of minutes and rest assured it is a one time action."
