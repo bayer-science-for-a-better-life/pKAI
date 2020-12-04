@@ -1,3 +1,5 @@
+[![PyPI version](https://badge.fury.io/py/pKAI.svg)](https://badge.fury.io/py/pKAI)
+
 # pKAI
 
 A fast and interpretable deep learning approach to accurate electrostatics-driven pKa prediction
