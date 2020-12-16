@@ -1,4 +1,4 @@
-[![PyPI version](https://badge.fury.io/py/pKAI.svg)](https://badge.fury.io/py/pKAI)
+[![PyPI version](https://badge.fury.io/py/pKAI.svg)](https://badge.fury.io/py/pKAI) [![PyPI - Downloads](https://img.shields.io/pypi/dm/pKAI)](https://badge.fury.io/py/pKAI)
 
 # pKAI
 
