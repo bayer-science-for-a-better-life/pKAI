@@ -1,4 +1,5 @@
 from residue import Residue
+import torch
 
 PK_MODS = {
     "ASP": 3.79,
@@ -106,11 +107,20 @@ class Protein:
 
     def predict_pkas(self, model, device):
         pks = []
+        residues = []
+        xs = []
         for residue in self.iter_residues(titrable_only=True):
             x = residue.input_layer
+            xs.append(x)
+            residues.append(residue)
+
+        xs = torch.stack((xs), dim=0)
+        dpks = model(xs.to(device))
+
+        for residue, dpk in zip(residues, dpks):
             resname = residue.resname
 
-            dpk = float(model(x.to(device)))
+            dpk = float(dpk)
             pk = round(dpk + PK_MODS[resname], 2)
 
             to_print = (
