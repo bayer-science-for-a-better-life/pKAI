@@ -4,36 +4,10 @@ from protein import Protein
 import torch
 
 
-def download_model(file_name: str, file_path: str) -> None:
-    from urllib import request, error
-    import ssl
-
-    ssl._create_default_https_context = ssl._create_unverified_context
-
-    url = f"https://filedn.com/lcmXXv3bIOvYUloTyvVflnk/{file_name}"
-    url = url.replace("+", "%2B")
-    try:
-        print(
-            "Downloading the model (~654M)... This may take a couple of minutes and rest assured it is a one time action."
-        )
-        request.urlretrieve(url, file_path)
-    except error.HTTPError:
-        raise error.HTTPError(
-            f"No {file_name} found. Please check the model name you are using is supported (pKAI or pKAI+)."
-        )
-    except error.URLError:
-        raise error.URLError(
-            f"{url} not reachable. Please check that you have internet access."
-        )
-
-
 def load_model(model_name: str, device):
     path = dirname(abspath(__file__))
     fname = f"{model_name}_model.pt"
-    fpath = f"{path}/{fname}"
-
-    if not isfile(fpath):
-        download_model(fname, fpath)
+    fpath = f"{path}/models/{fname}"
 
     device = torch.device(device)
     model = torch.jit.load(f"{fpath}").to(device)
@@ -73,4 +47,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

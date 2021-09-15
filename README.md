@@ -6,7 +6,7 @@ A fast and interpretable deep learning approach to accurate electrostatics-drive
 
 ```
 @article{pkai,
-author = {Reis, Pedro B. P. S. and Vila-Viçosa, Diogo and Bertolini, Marco and Montanari, Floriane and Machuqueiro, Miguel and Clevert, Djork-Arné},
+author = {Reis, Pedro B. P. S. and Bertolini, Marco and Montanari, Floriane and Machuqueiro, Miguel and Clevert, Djork-Arné},
 title = {pKAI: A fast and interpretable deep learning approach to accurate electrostatics-driven pKa prediction},
 note = {in preparation}
 }
@@ -45,21 +45,23 @@ pKAI <pdbfile> --model pKAI
 
 ## Benchmark
 
-Performed on 877 experimental values taken from the PKAD database.
+Performed on 736 experimental values taken from the PKAD database<sup>1</sup>.
 
-| Method                | RMSE | MAE  |
-|-----------------------|------|------|
-| Thurlkill<sup>1</sup> | 1.04 | 0.71 |
-| PROPKA<sup>2</sup>    | 1.05 | 0.71 |
-| PypKa<sup>3</sup>     | 0.98 | 0.66 |
-| pKAI                  | 1.03 | 0.68 |
-| pKAI+                 | 0.93 | 0.60 |
+| Method                | RMSE | MAE  | Quantile 0.9  | Error < 0.5 (%)  |
+|-----------------------|------|------|---------------|------------------|
+| Null<sup>2</sup>      | 1.09 | 0.72 |          1.51 |             52.3 |
+| PROPKA<sup>3</sup>    | 1.11 | 0.73 |          1.58 |             51.1 |
+| PypKa<sup>4</sup>     | 1.07 | 0.71 |          1.48 |             52.6 |
+| pKAI                  | 1.15 | 0.75 |          1.66 |             49.3 |
+| pKAI+                 | 0.98 | 0.64 |          1.37 |             55.0 |
 
-[1] Thurlkill, Richard L et al. “pK values of the ionizable groups of proteins.” doi:<a href="https://doi.org/10.1110/ps.051840806">10.1110/ps.051840806</a>
+[1] Pahari, Swagata et al. "PKAD: a database of experimentally measured pKa values of ionizable groups in proteins." doi:<a href="https://doi.org/10.1093/database/baz024">10.1093/database/baz024</a>
 
-[2] Olsson, Mats H M et al. “PROPKA3: Consistent Treatment of Internal and Surface Residues in Empirical pKa Predictions.” doi:<a href="https://doi.org/10.1021/ct100578z">10.1021/ct100578z</a>
+[2] Thurlkill, Richard L et al. “pK values of the ionizable groups of proteins.” doi:<a href="https://doi.org/10.1110/ps.051840806">10.1110/ps.051840806</a>
 
-[3] Reis, Pedro B P S et al. “PypKa: A Flexible Python Module for Poisson-Boltzmann-Based pKa Calculations.” doi:<a href="https://doi.org/10.1021/acs.jcim.0c00718">10.1021/acs.jcim.0c00718</a>
+[3] Olsson, Mats H M et al. “PROPKA3: Consistent Treatment of Internal and Surface Residues in Empirical pKa Predictions.” doi:<a href="https://doi.org/10.1021/ct100578z">10.1021/ct100578z</a>
+
+[4] Reis, Pedro B P S et al. “PypKa: A Flexible Python Module for Poisson-Boltzmann-Based pKa Calculations.” doi:<a href="https://doi.org/10.1021/acs.jcim.0c00718">10.1021/acs.jcim.0c00718</a>
 
 
 ## License

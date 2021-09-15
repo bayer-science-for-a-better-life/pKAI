@@ -74,7 +74,7 @@ class Protein:
                     else:
                         new_res = self.all_residues[chain][resnumb]
 
-                    atom = new_res.add_atom(aname, anumb, x, y, z)
+                    new_res.add_atom(aname, anumb, x, y, z)
 
                     if resname in tit_aas:
                         if chain not in self.tit_residues.keys():
@@ -131,4 +131,3 @@ class Protein:
             result = (residue.chain, residue.resnumb, residue.resname, pk)
             pks.append(result)
         return pks
-

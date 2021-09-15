@@ -13,28 +13,25 @@ AA_ATOMS = {
 }
 
 ATOM_OHE = [
-    "OD1_ASN",
-    "NE2_HIS",
     "N",
-    "NE1_TRP",
-    "NH_ARG",
     "NZ_LYS",
-    "O_COOH",
-    "NE2_GLN",
-    "O",
-    "OXT",
+    "NH_ARG",
+    "O_AMIDE",
     "OH_TYR",
+    "NE2_HIS",
     "SD_MET",
-    "OE1_GLN",
-    "ND1_HIS",
-    "OG1_THR",
-    "ND2_ASN",
-    "OG_SER",
-    "NE_ARG",
     "SG_CYS",
+    "OG_SER",
+    "O",
+    "NE1_TRP",
+    "OG1_THR",
+    "O_COOH",
+    "NE_ARG",
+    "N_AMIDE",
+    "ND1_HIS",
 ]
 
-RES_OHE = ["CTR", "HIS", "ASP", "LYS", "GLU", "CYS", "NTR", "TYR"]
+RES_OHE = ["CTR", "CYS", "TYR", "GLU", "HIS", "ASP", "LYS", "NTR"]
 
 
 class Residue:
@@ -100,18 +97,21 @@ class Residue:
         for aname, resname in zip(self.env_anames, self.env_resnames):
             aname = aname.strip()
             resname = resname.strip()
-            if aname == "SE" and resname == "SEC":
-                continue
-            if aname in ("N", "O", "OXT"):
-                new_aname = f"{aname}"
-            elif aname in ("OD1", "OD2", "OE1", "OE2") and resname in (
-                "ASP",
-                "GLU",
-                "UNK",
-            ):
-                new_aname = f"O_COOH"
-            elif aname in ("NH1", "NH2") and resname == "ARG":
-                new_aname = f"NH_ARG"
+
+            if aname in AA_ATOMS["CTR"]:
+                resname = "CTR"
+
+            if aname in ("N", "O"):
+                if resname != "NTR":
+                    new_aname = aname
+                else:
+                    new_aname = "NZ_LYS"
+            elif resname in ("CTR", "ASP", "GLU"):
+                new_aname = "O_COOH"
+            elif resname in ("GLN", "ASN"):
+                new_aname = f"{aname[0]}_AMIDE"
+            elif resname == "ARG" and aname in ("NH1", "NH2"):
+                new_aname = "NH_ARG"
             else:
                 new_aname = f"{aname}_{resname}"
 
@@ -140,8 +140,6 @@ class Residue:
         )
 
     def encode_input(self):
-
         self.encode_atoms()
         self.input_sort()
         self.apply_ohe()
-
