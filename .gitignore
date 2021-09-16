@@ -1,6 +1,4 @@
-pKAI/__pycache__
-pKAI/models
-pKAI/*.pt
+__pycache__
 .eggs
 build/
 dist/
